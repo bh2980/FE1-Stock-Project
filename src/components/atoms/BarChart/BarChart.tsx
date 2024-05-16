@@ -56,11 +56,14 @@ const BarChart = ({ data }: { data: BarChartDataType[] }) => {
       .data(data)
       .join("text")
       .attr("x", (d) => x(d.year.toString())! + x.bandwidth() / 2)
-      .attr("y", (d) => y(d.value || nullBarHeight) - 8)
+      .attr("y", height - 48)
       .attr("text-anchor", "middle")
       .style("font-size", "13.3px")
       .style("fill", "black")
-      .text((d) => (d.value !== null ? d.value + "억" : "?"));
+      .text((d) => (d.value !== null ? d.value + "억" : "?"))
+      .transition()
+      .duration(500)
+      .attr("y", (d) => y(d.value || nullBarHeight) - 8);
 
     svg
       .append("g")
