@@ -45,7 +45,7 @@ const BarChart = ({ data }: { data: BarChartDataType[] }) => {
       .attr("stroke-dasharray", (d) => (d.value === null ? "8,4" : null))
       .attr("rx", barRadius)
       .transition() // 트랜지션 시작
-      .duration(3) // 애니메이션 지속 시간 설정
+      .duration(500) // 애니메이션 지속 시간 설정 ms
       .attr("y", (d) => y(d.value || nullBarHeight)) // 애니메이션 끝 y 위치
       .attr("height", (d) => y(0) - y(d.value || nullBarHeight)); // 애니메이션 끝 높이
 
