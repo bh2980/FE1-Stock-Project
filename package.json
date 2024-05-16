@@ -15,7 +15,7 @@
     "chromatic": "chromatic --exit-zero-on-changes"
   },
   "dependencies": {
-    "d3": "^7.8.5",
+    "d3": "^7.9.0",
     "jotai": "^2.2.2",
     "msw": "^1.2.3",
     "next": "13.4.12",
@@ -41,6 +41,7 @@
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
     "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+    "@types/d3": "^7.4.3",
     "@types/jest": "^29.5.4",
     "@types/node": "^20.5.4",
     "@types/react": "^18.2.21",
