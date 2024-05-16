@@ -32,7 +32,6 @@ const BarChart = ({ data }: { data: BarChartDataType[] }) => {
 
     svg
       .append("g") // 새로운 <g> 요소를 추가
-      .attr("transform", `translate(0, 0)`)
       .selectAll("rect") // 모든 'rect' 요소를 선택 (현재는 없음)
       .data(data) // 데이터 바인딩
       .join("rect") // 데이터와 일치하는 'rect' 요소 생성
@@ -51,7 +50,6 @@ const BarChart = ({ data }: { data: BarChartDataType[] }) => {
 
     svg
       .append("g")
-      .attr("transform", `translate(0, 0)`)
       .selectAll("text")
       .data(data)
       .join("text")

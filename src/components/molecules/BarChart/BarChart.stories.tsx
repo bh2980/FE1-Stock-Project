@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from "@storybook/react";
 import BarChart from "./BarChart";
 
 const meta = {
-  title: "Atom/BarChart",
+  title: "molecules/BarChart",
   component: BarChart,
   parameters: {
     layout: "centered",
