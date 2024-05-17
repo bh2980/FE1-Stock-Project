@@ -1,22 +1,11 @@
 {
-  "printWidth": 100,
+  "printWidth": 200,
   "tabWidth": 2,
   "semi": true,
   "bracketSameLine": false,
   "singleQuote": false,
   "endOfLine": "lf",
-  "importOrder": [
-    "^@customTypes/(.*)$",
-    "^@root/(.*)$",
-    "^@src/(.*)$",
-    "^@assets/(.*)$",
-    "^@constants/(.*)$",
-    "^@utils/(.*)$",
-    "^@story/(.*)$",
-    "^@tokens/(.*)$",
-    "^@atoms/(.*)$",
-    "^[./]"
-  ],
+  "importOrder": ["^@customTypes/(.*)$", "^@root/(.*)$", "^@src/(.*)$", "^@assets/(.*)$", "^@constants/(.*)$", "^@utils/(.*)$", "^@story/(.*)$", "^@tokens/(.*)$", "^@atoms/(.*)$", "^[./]"],
   "importOrderSeparation": true,
   "importOrderSortSpecifiers": true
 }
