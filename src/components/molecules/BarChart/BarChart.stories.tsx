@@ -15,11 +15,11 @@ export default meta;
 type Story = StoryObj<typeof BarChart>;
 
 const data = [
-  { year: 2019, value: 151.8 },
-  { year: 2020, value: 242.2 },
-  { year: 2021, value: 121.3 },
-  { year: 2022, value: 196.7 },
-  { year: 2023, value: null }, // 값이 아직 없는 경우
+  { label: 2019, value: 151.8 },
+  { label: 2020, value: 242.2 },
+  { label: 2021, value: 121.3 },
+  { label: 2022, value: 196.7 },
+  { label: 2023, value: null }, // 값이 아직 없는 경우
 ];
 
 export const Default: Story = {
