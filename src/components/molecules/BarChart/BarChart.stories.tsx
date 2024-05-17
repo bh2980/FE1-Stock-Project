@@ -19,9 +19,9 @@ const data = [
   { label: 2020, value: 242.2 },
   { label: 2021, value: 121.3 },
   { label: 2022, value: 196.7 },
-  { label: 2023, value: 230 }, // 값이 아직 없는 경우
+  { label: 2023, value: null }, // 값이 아직 없는 경우
 ];
 
 export const Default: Story = {
-  render: () => <BarChart width={400} height={300} data={data} />,
+  render: () => <BarChart width={400} height={300} data={data} nullBarHeight={50} />,
 };

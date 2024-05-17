@@ -4,12 +4,14 @@ import type { PropsWithChildren } from "react";
 import type { PolymorphicPropsType, PolymorphicPropsWithInnerRefType } from "@customTypes/polymorphicType";
 
 type BarChartDataType = { label: number; value: number };
+type BarChartDataWithNullType = { label: number; value: null };
 
 export type BarChartProps = {
   width: number;
   height: number;
-  data: BarChartDataType[];
+  data: (BarChartDataType | BarChartDataWithNullType)[];
   padding?: number;
+  nullBarHeight?: number;
 };
 
 export type BandAxisProps = PolymorphicPropsWithInnerRefType<"g"> & {
