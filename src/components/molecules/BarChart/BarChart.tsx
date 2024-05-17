@@ -25,13 +25,37 @@ const BandAxis = ({ xScale, outerTickLength = 6, innerTickLength = 6, ...props }
   );
 };
 
-const Bar = ({ xScale, yScale, data, ...props }: BarProps) => {
-  return <rect width={xScale.bandwidth()} height={yScale(0) - yScale(data.value)} x={xScale(data.label.toString())} y={yScale(data.value)} {...props} />;
+const Bar = ({ xScale, yScale, data, nullBarHeight = 0, animationDuration = "0.3s", rx, labelPostfix = "", ...props }: BarProps) => {
+  const rectWidth = xScale.bandwidth();
+  const rectHeight = yScale(0) - yScale(data.value || nullBarHeight);
+  const rectX = xScale(data.label.toString())!;
+  const rectY = yScale(data.value || nullBarHeight);
+
+  return (
+    <g {...props}>
+      <rect
+        width={rectWidth}
+        height={rectHeight}
+        x={rectX}
+        y={rectY}
+        rx={rx}
+        stroke={data.value === null ? "inherit" : undefined}
+        strokeDasharray={data.value === null ? "6, 4" : undefined}
+        fill={data.value === null ? "none" : undefined}
+      >
+        <animate attributeName="height" from="0" to={rectHeight} dur={animationDuration} fill="freeze" />
+        <animate attributeName="y" from={yScale(0)} to={rectY} dur={animationDuration} fill="freeze" />
+      </rect>
+      <text x={rectX + rectWidth / 2} y={rectY - 8} textAnchor="middle" className="stroke-none">
+        {data.value ? `${data.value}${labelPostfix}` : "?"}
+        <animate attributeName="y" from={yScale(0) - 8} to={rectY - 8} dur={animationDuration} fill="freeze" />
+      </text>
+    </g>
+  );
 };
 
-const BarChart = ({ width, height, data, padding = 0.5, nullBarHeight = 0 }: BarChartProps) => {
+const BarChart = ({ width, height, data, padding = 0.5 }: BarChartProps) => {
   const margin = { left: 0, bottom: 32 };
-  const animationDuration = "0.3s";
 
   const xScale = scaleBand()
     .domain(data.map((d) => d.label.toString()))
@@ -46,27 +70,7 @@ const BarChart = ({ width, height, data, padding = 0.5, nullBarHeight = 0 }: Bar
   return (
     <svg width={width} height={height}>
       {data.map((data, i) => {
-        const barData = data.value === null ? { ...data, value: nullBarHeight } : data;
-
-        return (
-          <g key={`bar-${i}`}>
-            {data.value !== null ? (
-              <Bar xScale={xScale} yScale={yScale} data={barData} rx="6" className="fill-secondary">
-                <animate attributeName="height" from="0" to={yScale(0) - yScale(data.value)} dur={animationDuration} fill="freeze" />
-                <animate attributeName="y" from={yScale(0)} to={yScale(data.value)} dur={animationDuration} fill="freeze" />
-              </Bar>
-            ) : (
-              <Bar xScale={xScale} yScale={yScale} data={barData} rx="6" strokeDasharray="6, 4" className="stroke-secondary fill-none">
-                <animate attributeName="height" from="0" to={yScale(0) - yScale(nullBarHeight)} dur={animationDuration} fill="freeze" />
-                <animate attributeName="y" from={yScale(0)} to={yScale(nullBarHeight)} dur={animationDuration} fill="freeze" />
-              </Bar>
-            )}
-            <text x={xScale(data.label.toString())! + xScale.bandwidth() / 2} y={yScale(data.value || nullBarHeight) - 8} textAnchor="middle" className="text-surface-on font-bold text-body2">
-              {data.value ? `${data.value}억` : "?"}
-              <animate attributeName="y" from={yScale(0) - 8} to={yScale(data.value || nullBarHeight) - 8} dur={animationDuration} fill="freeze" />
-            </text>
-          </g>
-        );
+        return <Bar key={`bar-${i}`} xScale={xScale} yScale={yScale} data={data} rx="6" nullBarHeight={50} className="stroke-secondary fill-secondary font-bold text-body2" />;
       })}
       <BandAxis xScale={xScale} textAnchor="middle" transform={`translate(0, ${height - margin.bottom})`} className="text-body2 fill-surface-on-variant" />
     </svg>

@@ -3,15 +3,13 @@ import type { PropsWithChildren } from "react";
 
 import type { PolymorphicPropsType, PolymorphicPropsWithInnerRefType } from "@customTypes/polymorphicType";
 
-type BarChartDataType = { label: number; value: number };
-type BarChartDataWithNullType = { label: number; value: null };
+type BarChartDataType = { label: number; value: number | null };
 
 export type BarChartProps = {
   width: number;
   height: number;
-  data: (BarChartDataType | BarChartDataWithNullType)[];
+  data: BarChartDataType[];
   padding?: number;
-  nullBarHeight?: number;
 };
 
 export type BandAxisProps = PolymorphicPropsWithInnerRefType<"g"> & {
@@ -20,9 +18,12 @@ export type BandAxisProps = PolymorphicPropsWithInnerRefType<"g"> & {
   innerTickLength?: number;
 };
 
-export type BarProps = PolymorphicPropsType<"rect"> &
+export type BarProps = PolymorphicPropsType<"g"> &
   PropsWithChildren & {
     xScale: ScaleBand<string>;
     yScale: ScaleLinear<number, number, never>;
     data: BarChartDataType;
+    nullBarHeight?: number;
+    animationDuration?: string;
+    labelPostfix?: string;
   };
