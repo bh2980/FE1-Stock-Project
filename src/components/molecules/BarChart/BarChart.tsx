@@ -19,7 +19,7 @@ const BarChart = ({ width, height, data }: BarChartProps) => {
   const xScale = scaleBand()
     .domain(data.map((d) => d.year.toString()))
     .range([margin.left, width - margin.left])
-    .padding(0.4);
+    .padding(0.5);
 
   const yScale = scaleLinear()
     .domain([0, max(data, (d) => (d.value ? d.value : 0))!])
@@ -41,9 +41,13 @@ const BarChart = ({ width, height, data }: BarChartProps) => {
             stroke="currentColor"
             strokeDasharray={d.value === null ? "6, 4" : undefined}
             className={d.value === null ? "fill-none" : "fill-secondary"}
-          />
+          >
+            <animate attributeName="height" from="0" to={yScale(0) - yScale(d.value || nullBarHeight)} dur="0.5s" fill="freeze" />
+            <animate attributeName="y" from={yScale(0)} to={yScale(d.value || nullBarHeight)} dur="0.5s" fill="freeze" />
+          </rect>
           <text x={xScale(d.year.toString())! + xScale.bandwidth() / 2} y={yScale(d.value || nullBarHeight) - 8} textAnchor="middle" className="text-surface-on font-bold text-body2">
             {d.value ? `${d.value}억` : "?"}
+            <animate attributeName="y" from={yScale(0) - 8} to={yScale(d.value || nullBarHeight) - 8} dur="0.5s" fill="freeze" />
           </text>
         </g>
       ))}
