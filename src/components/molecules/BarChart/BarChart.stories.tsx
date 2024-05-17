@@ -23,5 +23,5 @@ const data = [
 ];
 
 export const Default: Story = {
-  render: () => <BarChart data={data} />,
+  render: () => <BarChart width={400} height={300} data={data} />,
 };
