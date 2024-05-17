@@ -31,6 +31,8 @@ const Bar = ({ xScale, yScale, data, nullBarHeight = 0, animationDuration = "0.3
   const rectX = xScale(data.label.toString())!;
   const rectY = yScale(data.value || nullBarHeight);
 
+  const labelOffset = 8;
+
   return (
     <g {...props}>
       <rect
@@ -46,9 +48,9 @@ const Bar = ({ xScale, yScale, data, nullBarHeight = 0, animationDuration = "0.3
         <animate attributeName="height" from="0" to={rectHeight} dur={animationDuration} fill="freeze" />
         <animate attributeName="y" from={yScale(0)} to={rectY} dur={animationDuration} fill="freeze" />
       </rect>
-      <text x={rectX + rectWidth / 2} y={rectY - 8} textAnchor="middle" className="stroke-none">
+      <text x={rectX + rectWidth / 2} y={rectY - labelOffset} textAnchor="middle" className="stroke-none">
         {data.value ? `${data.value}${labelPostfix}` : "?"}
-        <animate attributeName="y" from={yScale(0) - 8} to={rectY - 8} dur={animationDuration} fill="freeze" />
+        <animate attributeName="y" from={yScale(0) - labelOffset} to={rectY - labelOffset} dur={animationDuration} fill="freeze" />
       </text>
     </g>
   );
