@@ -1,23 +1,8 @@
-import { type ScaleBand, type ScaleLinear, max, scaleBand, scaleLinear } from "d3";
-import React, { PropsWithChildren } from "react";
-
-import { PolymorphicPropsType, type PolymorphicPropsWithInnerRefType } from "@customTypes/polymorphicType";
+import { max, scaleBand, scaleLinear } from "d3";
 
 import { isEven } from "@utils/isEven";
 
-type BarChartDataType = { label: number; value: number | null };
-
-type BarChartProps = {
-  width: number;
-  height: number;
-  data: BarChartDataType[];
-};
-
-type BandAxisProps = PolymorphicPropsWithInnerRefType<"g"> & {
-  xScale: ScaleBand<string>;
-  outerTickLength?: number;
-  innerTickLength?: number;
-};
+import { BandAxisProps, BarChartProps, BarProps } from "./BarChart.types";
 
 const BandAxis = ({ xScale, outerTickLength = 6, innerTickLength = 6, ...props }: BandAxisProps) => {
   const [startPoint, endPoint] = xScale.range();
@@ -38,14 +23,6 @@ const BandAxis = ({ xScale, outerTickLength = 6, innerTickLength = 6, ...props }
     </g>
   );
 };
-
-type BarProps = PolymorphicPropsType<"rect"> &
-  PropsWithChildren & {
-    xScale: ScaleBand<string>;
-    yScale: ScaleLinear<number, number, never>;
-    data: BarChartDataType;
-    nullBarHeight?: number;
-  };
 
 const Bar = ({ xScale, yScale, data, nullBarHeight = 0, ...props }: BarProps) => {
   return <rect width={xScale.bandwidth()} height={yScale(0) - yScale(data.value || nullBarHeight)} x={xScale(data.label.toString())} y={yScale(data.value || nullBarHeight)} {...props} />;
