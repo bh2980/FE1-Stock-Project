@@ -9,6 +9,7 @@ export type BarChartProps = {
   width: number;
   height: number;
   data: BarChartDataType[];
+  padding?: number;
 };
 
 export type BandAxisProps = PolymorphicPropsWithInnerRefType<"g"> & {
@@ -22,5 +23,4 @@ export type BarProps = PolymorphicPropsType<"rect"> &
     xScale: ScaleBand<string>;
     yScale: ScaleLinear<number, number, never>;
     data: BarChartDataType;
-    nullBarHeight?: number;
   };
