@@ -31,7 +31,7 @@ const Bar = ({ xScale, yScale, data, nullBarHeight = 0, animationDuration = "0.3
   const rectX = xScale(data.label.toString())!;
   const rectY = yScale(data.value || nullBarHeight);
 
-  const labelOffset = 8;
+  const labelOffset = 12;
 
   return (
     <g {...props}>
@@ -57,24 +57,30 @@ const Bar = ({ xScale, yScale, data, nullBarHeight = 0, animationDuration = "0.3
 };
 
 const BarChart = ({ width, height, data, padding = 0.5 }: BarChartProps) => {
-  const margin = { left: 0, bottom: 32 };
+  const margin = { x: 0, y: 32 };
 
   const xScale = scaleBand()
     .domain(data.map((d) => d.label.toString()))
-    .range([margin.left, width - margin.left])
+    .range([margin.x, width - margin.x])
     .padding(padding);
 
   const yScale = scaleLinear()
     .domain([0, max(data, (d) => (d.value ? d.value : 0))!])
     .nice()
-    .range([height - margin.bottom, margin.bottom]);
+    .range([height - margin.y, margin.y]);
+
+  const nullBarHeight =
+    data.reduce((acc, cur) => {
+      acc += cur?.value ? cur.value : 0;
+      return acc;
+    }, 0) / data.length;
 
   return (
     <svg width={width} height={height}>
       {data.map((data, i) => {
-        return <Bar key={`bar-${i}`} xScale={xScale} yScale={yScale} data={data} rx="6" nullBarHeight={50} className="stroke-secondary fill-secondary font-bold text-body2" />;
+        return <Bar key={`bar-${i}`} xScale={xScale} yScale={yScale} data={data} rx="6" nullBarHeight={nullBarHeight} className="stroke-secondary fill-secondary font-bold text-body2" />;
       })}
-      <BandAxis xScale={xScale} textAnchor="middle" transform={`translate(0, ${height - margin.bottom})`} className="text-body2 fill-surface-on-variant" />
+      <BandAxis xScale={xScale} textAnchor="middle" transform={`translate(0, ${height - margin.y})`} className="text-body2 fill-surface-on-variant" />
     </svg>
   );
 };
